@@ -18,7 +18,6 @@ import android.view.animation.DecelerateInterpolator;
 import android.view.animation.RotateAnimation;
 import android.view.animation.ScaleAnimation;
 import android.view.animation.TranslateAnimation;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -204,7 +203,7 @@ public class RadialMenuWidget extends View {
                     animateOuterIn = true;  //sets Wedge2Shown = false;
                 }
                 selected = null;
-                Toast.makeText(getContext(), centerCircle.getName() + " pressed.", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getContext(), centerCircle.getName() + " pressed.", Toast.LENGTH_SHORT).show();
                 centerCircle.menuActiviated();
 
             } else if (selected != null) {
@@ -214,13 +213,13 @@ public class RadialMenuWidget extends View {
 
                         //Checks if a inner ring is enabled if so closes the outer ring an
                         if (enabled != null) {
-                            Toast.makeText(getContext(), "Closing outer ring", Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(getContext(), "Closing outer ring", Toast.LENGTH_SHORT).show();
                             enabled = null;
                             animateOuterIn = true;  //sets Wedge2Shown = false;
 
                             //If outer ring is not enabled, then executes event
                         } else {
-                            Toast.makeText(getContext(), menuEntries.get(i).getName() + " pressed.", Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(getContext(), menuEntries.get(i).getName() + " pressed.", Toast.LENGTH_SHORT).show();
                             menuEntries.get(i).menuActiviated();
 
                             //Figures out how many outer rings
@@ -241,7 +240,7 @@ public class RadialMenuWidget extends View {
                 for (int i = 0; i < Wedges2.length; i++) {
                     Wedge f = Wedges2[i];
                     if (f == selected2) {
-                        Toast.makeText(getContext(), wedge2Data.getChildren().get(i).getName() + " pressed.", Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(getContext(), wedge2Data.getChildren().get(i).getName() + " pressed.", Toast.LENGTH_SHORT).show();
                         animateOuterIn = true;  //sets Wedge2Shown = false;
                         enabled = null;
                         selected = null;
@@ -249,7 +248,7 @@ public class RadialMenuWidget extends View {
                 }
             } else {
                 //This is when something outside the circle or any of the rings is selected
-                Toast.makeText(getContext(), "Area outside rings pressed.", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getContext(), "Area outside rings pressed.", Toast.LENGTH_SHORT).show();
 
                 //selected = null;
                 //enabled = null;

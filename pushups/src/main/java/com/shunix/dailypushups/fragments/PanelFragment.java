@@ -1,8 +1,8 @@
 package com.shunix.dailypushups.fragments;
 
+import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -34,21 +34,32 @@ public class PanelFragment extends Fragment {
         RadialMenuWidget radialMenu = new RadialMenuWidget(context);
 
         // Make the view suitable for current screen size.
+        // 56dip is the actionbar size from decompiled source.
+        int actionBarHeight = dpToPx(context, 56);
+        if (BuildConfig.DEBUG) {
+            Log.d("ActionBar Height", String.valueOf(actionBarHeight));
+        }
         int xScreenSize = context.getResources().getDisplayMetrics().widthPixels;
-        int yScreenSize = context.getResources().getDisplayMetrics().heightPixels;
+        int yScreenSize = context.getResources().getDisplayMetrics().heightPixels - actionBarHeight;
         int xCenter = xScreenSize / 2;
         int yCenter = yScreenSize / 2;
         int xSource = xCenter;
         int ySource = yCenter;
+        int innerRadius = Math.min(xScreenSize, yScreenSize) / 16;
+        int outerRadius = Math.min(xScreenSize, yScreenSize) / 6;
 
         // Set params for the radial menu.
-        radialMenu.setSourceLocation(xCenter, yCenter);
+        radialMenu.setSourceLocation(xSource, ySource);
         radialMenu.setCenterLocation(xCenter, yCenter);
         radialMenu.setShowSourceLocation(true);
+        radialMenu.setInnerRingRadius(innerRadius, outerRadius);
 
         // Set menu entries for the radial menu.
         radialMenu.setCenterCircle(new CenterPoint());
         radialMenu.addMenuEntry(new CenterPoint());
+        radialMenu.addMenuEntry(new CenterPoint());
+        radialMenu.setInnerRingColor(getResources().getColor(R.color.ivory), 100);
+        radialMenu.setOuterRingColor(getResources().getColor(R.color.ivory), 100);
 
         // Add Radial Menu to the layout.
         layout.addView(radialMenu);
@@ -62,6 +73,12 @@ public class PanelFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return getPanelView(getActivity());
+    }
+
+    public static int dpToPx(Context context, int dp) {
+        final float scale = context.getResources().getDisplayMetrics().density;
+        int px = (int) (dp * scale + 0.5f);
+        return px;
     }
 }
 
