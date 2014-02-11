@@ -43,6 +43,13 @@ public class PushupFragment extends Fragment implements SensorEventListener {
      */
     private int count;
     /**
+     * Status indicator for sensors.
+     * 0 -- init
+     * 1 -- close
+     * 2 -- far
+     */
+    private int indicator = 0;
+    /**
      * Helper to save the count.
      */
     private SharedPreferenceHelper sharedPreferenceHelper;
@@ -86,6 +93,18 @@ public class PushupFragment extends Fragment implements SensorEventListener {
             /**
              * values[0] indicates the distance.
              */
+            if(values[0] == 0.0) {
+                indicator = 0;
+                indicator++;
+            } else {
+                indicator++;
+            }
+            if(indicator == 2) {
+                count++;
+                if(BuildConfig.DEBUG) {
+                    Log.d("Count", String.valueOf(count));
+                }
+            }
             if (BuildConfig.DEBUG) {
                 if (values[0] == 0.0) {
                     Log.d("SensorEvent", "Close");
