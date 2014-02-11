@@ -1,5 +1,8 @@
 package com.shunix.dailypushups.fragments;
 
+import android.animation.Animator;
+import android.animation.ObjectAnimator;
+import android.animation.ValueAnimator;
 import android.app.Fragment;
 import android.content.Context;
 import android.hardware.Sensor;
@@ -29,6 +32,7 @@ public class PushupFragment extends Fragment implements SensorEventListener {
      * Show the countdown.
      */
     private HoloCircularProgressBar progressBar;
+    private ObjectAnimator animator;
     /**
      * Sensor manager to get the P-sensor.
      */
@@ -58,6 +62,7 @@ public class PushupFragment extends Fragment implements SensorEventListener {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.pushup_layout, container, false);
         progressBar = (HoloCircularProgressBar) view.findViewById(R.id.holoCircularProgressBar);
+        showCountDown(5);
         return view;
     }
 
@@ -79,6 +84,48 @@ public class PushupFragment extends Fragment implements SensorEventListener {
         count = 0;
     }
 
+    /**
+     * Start the progress bar for counter down.
+     */
+    public void showCountDown(int seconds) {
+        animator = ObjectAnimator.ofFloat(progressBar, "progress", 1f);
+        if(animator != null) {
+            animator.cancel();
+        }
+        animator.setDuration(seconds * 1000);
+        animator.addListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animator) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animator) {
+                progressBar.setProgress(0f);
+                showCountDown(5);
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animator) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animator) {
+
+            }
+        });
+//        animator.reverse();
+        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator valueAnimator) {
+                progressBar.setProgress((Float) valueAnimator.getAnimatedValue());
+            }
+        });
+        progressBar.setMarkerProgress(1f);
+        animator.start();
+    }
+
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
         // Get data from P-sensor.
@@ -93,15 +140,15 @@ public class PushupFragment extends Fragment implements SensorEventListener {
             /**
              * values[0] indicates the distance.
              */
-            if(values[0] == 0.0) {
+            if (values[0] == 0.0) {
                 indicator = 0;
                 indicator++;
             } else {
                 indicator++;
             }
-            if(indicator == 2) {
+            if (indicator == 2) {
                 count++;
-                if(BuildConfig.DEBUG) {
+                if (BuildConfig.DEBUG) {
                     Log.d("Count", String.valueOf(count));
                 }
             }
