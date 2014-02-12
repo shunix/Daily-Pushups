@@ -14,9 +14,11 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 
+import com.shunix.dailypushups.BuildConfig;
 import com.shunix.dailypushups.R;
 import com.shunix.dailypushups.fragments.PanelFragment;
 
@@ -332,9 +334,13 @@ public class HoloCircularProgressBar extends View {
         textPaint.setColor(Color.WHITE);
         final int TEXT_DIP = 100;
         int pixel = PanelFragment.dpToPx(context, TEXT_DIP);
+        if(BuildConfig.DEBUG) {
+            Log.d("TextSize", String.valueOf(pixel));
+        }
         textPaint.setTextSize((float) pixel);
         Paint.FontMetrics fontMetrics = textPaint.getFontMetrics();
-        float height = mCircleBounds.bottom - mCircleBounds.top;
+//        float height = mCircleBounds.bottom - mCircleBounds.top;
+        float height = getHeight();
         float width = mCircleBounds.right - mCircleBounds.left;
         float left = mCircleBounds.left;
         float top = mCircleBounds.left;
