@@ -62,6 +62,7 @@ public class PushupFragment extends Fragment implements SensorEventListener {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.pushup_layout, container, false);
         progressBar = (HoloCircularProgressBar) view.findViewById(R.id.holoCircularProgressBar);
+        progressBar.setNumber(0);
         showCountDown(5);
         return view;
     }
@@ -162,6 +163,7 @@ public class PushupFragment extends Fragment implements SensorEventListener {
                 /**
                  * Restart the countdown.
                  */
+                progressBar.setNumber(count);
                 animator.cancel();
                 progressBar.setProgress(0f);
                 showCountDown(5);
