@@ -88,8 +88,12 @@ public class PushupFragment extends Fragment implements SensorEventListener {
      * Start the progress bar for counter down.
      */
     public void showCountDown(int seconds) {
+        /**
+         * Store the count on previous circle.
+         */
+        final int preCount = count;
         animator = ObjectAnimator.ofFloat(progressBar, "progress", 1f);
-        if(animator != null) {
+        if (animator != null) {
             animator.cancel();
         }
         animator.setDuration(seconds * 1000);
@@ -102,7 +106,14 @@ public class PushupFragment extends Fragment implements SensorEventListener {
             @Override
             public void onAnimationEnd(Animator animator) {
                 progressBar.setProgress(0f);
-                showCountDown(5);
+                if (count == preCount) {
+                    animator.cancel();
+                    // TODO Mission failed.
+                    if (BuildConfig.DEBUG) {
+                        Log.d("Failed", "You failed, score is " + String.valueOf(count));
+                        count = 0;
+                    }
+                }
             }
 
             @Override
@@ -148,6 +159,12 @@ public class PushupFragment extends Fragment implements SensorEventListener {
             }
             if (indicator == 2) {
                 count++;
+                /**
+                 * Restart the countdown.
+                 */
+                animator.cancel();
+                progressBar.setProgress(0f);
+                showCountDown(5);
                 if (BuildConfig.DEBUG) {
                     Log.d("Count", String.valueOf(count));
                 }
