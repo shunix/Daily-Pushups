@@ -18,16 +18,23 @@ import android.view.ViewGroup;
 
 import com.shunix.dailypushups.BuildConfig;
 import com.shunix.dailypushups.R;
+import com.shunix.dailypushups.database.CacheManager;
 import com.shunix.dailypushups.ui.HoloCircularProgressBar;
 import com.shunix.dailypushups.utils.SharedPreferenceHelper;
 
+import java.util.Date;
+
 /**
  * @author Ray WANG <admin@shunix.com>
- * @version 1.0.0
+ * @version 1.1.0
  * @since Feb 9th, 2014
  */
 public class PushupFragment extends Fragment implements SensorEventListener {
 
+    /**
+     * used to save the data to database
+     */
+    private CacheManager manager;
     /**
      * Show the countdown.
      */
@@ -83,6 +90,8 @@ public class PushupFragment extends Fragment implements SensorEventListener {
         sharedPreferenceHelper = SharedPreferenceHelper.getInstance(getActivity());
         // Set the count to 0 on every startup.
         count = 0;
+        // Initialize the cache manager.
+        manager = new CacheManager(getActivity().getApplicationContext());
     }
 
     /**
@@ -112,6 +121,14 @@ public class PushupFragment extends Fragment implements SensorEventListener {
                     // TODO Mission failed.
                     if (BuildConfig.DEBUG) {
                         Log.d("Failed", "You failed, score is " + String.valueOf(count));
+                        /**
+                         * Save the result to database.
+                         */
+                        Date now = new Date();
+                        manager.saveCache(now, count);
+                        if (BuildConfig.DEBUG) {
+                            Log.d("DatabaseManager", String.valueOf(manager.getCount(now)));
+                        }
                         count = 0;
                     }
                 }

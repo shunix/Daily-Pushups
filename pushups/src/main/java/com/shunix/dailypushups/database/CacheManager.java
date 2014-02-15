@@ -1,11 +1,13 @@
 package com.shunix.dailypushups.database;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.orm.androrm.DatabaseAdapter;
 import com.orm.androrm.Filter;
 import com.orm.androrm.Model;
 import com.orm.androrm.QuerySet;
+import com.shunix.dailypushups.BuildConfig;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -85,6 +87,9 @@ public class CacheManager {
             int preCount = 0;
             for (Cache cache : caches) {
                 preCount = cache.getCount();
+                if (BuildConfig.DEBUG) {
+                    Log.d("PreCount", String.valueOf(preCount));
+                }
             }
             // Save the data now.
             Cache cache = new Cache();
