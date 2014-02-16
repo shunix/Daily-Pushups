@@ -1,4 +1,9 @@
 <resources>
     <string name="app_name">DailyPushups</string>
     <string name="settings">Settings</string>
+    <string-array name="spinner_array">
+        <item>3 days</item>
+        <item>1 week</item>
+        <item>1 month</item>
+    </string-array>
 </resources>
