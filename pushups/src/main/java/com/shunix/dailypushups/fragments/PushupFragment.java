@@ -5,12 +5,15 @@ import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.app.Fragment;
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.os.PowerManager;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -70,6 +73,9 @@ public class PushupFragment extends Fragment implements SensorEventListener {
         View view = inflater.inflate(R.layout.pushup_layout, container, false);
         progressBar = (HoloCircularProgressBar) view.findViewById(R.id.holoCircularProgressBar);
         progressBar.setNumber(0);
+        SharedPreferences preference = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        int color = preference.getInt(getString(R.string.color_key), Color.CYAN);
+        progressBar.setProgressColor(color);
         showCountDown(5);
         return view;
     }

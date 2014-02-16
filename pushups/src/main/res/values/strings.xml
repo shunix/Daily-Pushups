@@ -8,4 +8,16 @@
         <item>1 week</item>
         <item>1 month</item>
     </string-array>
+    <string-array name="list_name">
+        <item>Bar Chart</item>
+        <item>Line Chart</item>
+    </string-array>
+    <string-array name="list_value">
+        <item>bar</item>
+        <item>line</item>
+    </string-array>
+    <string name="dialog_title">Chart type</string>
+    <string name="chart_type_key">chart_type_key</string>
+    <string name="color_key">color_key</string>
+    <string name="progress_bar_color">Progress Bar Color</string>
 </resources>

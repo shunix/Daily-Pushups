@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <ListPreference
+        android:dialogTitle="@string/dialog_title"
+        android:entries="@array/list_name"
+        android:entryValues="@array/list_value"
+        android:key="@string/chart_type_key"
+        android:title="@string/dialog_title" />
+    <com.shunix.dailypushups.ui.ColorPickerPreference
+        android:key="@string/color_key"
+        android:title="@string/progress_bar_color"
+        android:defaultValue="@color/cyan"
+        alphaSlider="true" />
+</PreferenceScreen>

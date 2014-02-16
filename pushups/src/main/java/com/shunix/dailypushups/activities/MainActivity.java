@@ -1,11 +1,13 @@
 package com.shunix.dailypushups.activities;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.MenuItem;
 
 import com.shunix.dailypushups.R;
-import com.shunix.dailypushups.fragments.BarGraphFragment;
+import com.shunix.dailypushups.fragments.PushupFragment;
 
 /**
  * @author Ray WANG <admin@shunix.com>
@@ -17,7 +19,7 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_layout);
-        getFragmentManager().beginTransaction().replace(R.id.container, new BarGraphFragment()).commit();
+        getFragmentManager().beginTransaction().replace(R.id.container, new PushupFragment()).commit();
     }
 
     /**
@@ -27,5 +29,18 @@ public class MainActivity extends Activity {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.actionbar, menu);
         return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.settings:
+                Intent intent = new Intent(this, SettingsActivity.class);
+                startActivity(intent);
+                break;
+            default:
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
