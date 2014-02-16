@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.view.Menu;
 
 import com.shunix.dailypushups.R;
-import com.shunix.dailypushups.fragments.LineGraphFragment;
+import com.shunix.dailypushups.fragments.BarGraphFragment;
 
 /**
  * @author Ray WANG <admin@shunix.com>
@@ -17,7 +17,7 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_layout);
-        getFragmentManager().beginTransaction().replace(R.id.container, new LineGraphFragment()).commit();
+        getFragmentManager().beginTransaction().replace(R.id.container, new BarGraphFragment()).commit();
     }
 
     /**

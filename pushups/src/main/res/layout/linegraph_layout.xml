@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_marginLeft="10dp"
+    android:layout_marginRight="10dp"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <Spinner
+        android:id="@+id/spinner"
+        android:layout_marginTop="20dp"
+        android:layout_width="match_parent"
+        android:layout_weight="1"
+        android:layout_height="0dp"></Spinner>
+
+    <com.shunix.dailypushups.ui.LineGraph
+        android:id="@+id/linegraph"
+        android:layout_width="match_parent"
+        android:layout_weight="9"
+        android:layout_height="0dp" />
+
+</LinearLayout>

@@ -11,17 +11,17 @@ import android.widget.Spinner;
 
 import com.shunix.dailypushups.BuildConfig;
 import com.shunix.dailypushups.R;
-import com.shunix.dailypushups.ui.Line;
-import com.shunix.dailypushups.ui.LineGraph;
-import com.shunix.dailypushups.ui.LinePoint;
+import com.shunix.dailypushups.ui.Bar;
+import com.shunix.dailypushups.ui.BarGraph;
+
+import java.util.ArrayList;
 
 /**
  * @author Ray WANG <admin@shunix.com>
  * @version 1.0.0
- * @since Feb 10th, 2014
+ * @since Feb 16th, 2014
  */
-public class LineGraphFragment extends Fragment {
-
+public class BarGraphFragment extends Fragment {
     /**
      * used as the date range picker.
      */
@@ -29,37 +29,34 @@ public class LineGraphFragment extends Fragment {
     /**
      * used to show the graph.
      */
-    private LineGraph lineGraph;
+    private BarGraph barGraph;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.linegraph_layout, container, false);
+        View view = inflater.inflate(R.layout.bargraph_layout, container, false);
         dateSpinner = (Spinner) view.findViewById(R.id.spinner);
         ArrayAdapter arrayAdapter = ArrayAdapter.createFromResource(getActivity(), R.array.spinner_array, android.R.layout.simple_spinner_item);
         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         dateSpinner.setAdapter(arrayAdapter);
-        lineGraph = (LineGraph) view.findViewById(R.id.linegraph);
+        barGraph = (BarGraph) view.findViewById(R.id.bargraph);
         if (BuildConfig.DEBUG) {
-            /**
-             * Show the graph.
-             */
-            Line line = new Line();
-            LinePoint p1 = new LinePoint();
-            p1.setX(0);
-            p1.setY(20);
-            line.addPoint(p1);
-            LinePoint p2 = new LinePoint();
-            p2.setX(1);
-            p2.setY(30);
-            line.addPoint(p2);
-            LinePoint p3 = new LinePoint();
-            p3.setX(2);
-            p3.setY(15);
-            line.addPoint(p3);
-            line.setColor(Color.CYAN);
-            lineGraph.addLine(line);
-            lineGraph.setRangeY(0, 35);
-            lineGraph.setLineToFill(0);
+            ArrayList<Bar> list = new ArrayList<Bar>();
+            Bar b1 = new Bar();
+            b1.setColor(Color.CYAN);
+            b1.setName("Bar 1");
+            b1.setValue(20);
+            list.add(b1);
+            Bar b2 = new Bar();
+            b2.setColor(Color.GRAY);
+            b2.setName("Bar 2");
+            b2.setValue(30);
+            list.add(b2);
+            Bar b3 = new Bar();
+            b3.setColor(Color.YELLOW);
+            b3.setName("Bar 3");
+            b3.setValue(15);
+            list.add(b3);
+            barGraph.setBars(list);
         }
         return view;
     }
