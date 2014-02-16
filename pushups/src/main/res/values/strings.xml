@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">DailyPushups</string>
     <string name="settings">Settings</string>
+    <string name="dialog_color_picker">Color Picker</string>
+    <string name="press_color_to_apply">Press on Color to apply</string>
     <string-array name="spinner_array">
         <item>3 days</item>
         <item>1 week</item>
