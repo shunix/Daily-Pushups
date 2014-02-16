@@ -9,6 +9,7 @@ import com.orm.androrm.Model;
 import com.orm.androrm.QuerySet;
 import com.shunix.dailypushups.BuildConfig;
 
+import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -69,7 +70,8 @@ public class CacheManager {
          * Query the database to see if record exist in current day.
          */
         Filter filter = new Filter();
-        filter.is("dateString", date.toString());
+        DateFormat format = DateFormat.getDateInstance();
+        filter.is("date", format.format(date));
         QuerySet<Cache> caches = Cache.objects(context).filter(filter);
         /**
          * No record for today.
@@ -79,12 +81,16 @@ public class CacheManager {
             Cache cache = new Cache();
             cache.setDate(date);
             cache.setCount(count);
+
             cache.save(context);
         } else {
             // Get records for today.
             // Need add the previous count to the current one.
             // In fact, this loop will only be executed once.
             int preCount = 0;
+            if (BuildConfig.DEBUG) {
+                Log.d("CachesCount", String.valueOf(caches.count()));
+            }
             for (Cache cache : caches) {
                 preCount = cache.getCount();
                 if (BuildConfig.DEBUG) {
@@ -92,9 +98,14 @@ public class CacheManager {
                 }
             }
             // Save the data now.
+            // Delete data before saving.
+//            for (Cache cache : caches) {
+//                cache.delete(context);
+//            }
             Cache cache = new Cache();
             cache.setDate(date);
             cache.setCount(count + preCount);
+            cache.save(context);
         }
     }
 
@@ -104,7 +115,8 @@ public class CacheManager {
     public int getCount(Date date) {
         int count = 0;
         Filter filter = new Filter();
-        filter.is("dateString", date.toString());
+        DateFormat format = DateFormat.getDateInstance();
+        filter.is("date", format.format(date));
         QuerySet<Cache> caches = Cache.objects(context).filter(filter);
         if (caches.isEmpty()) {
             return 0;

@@ -121,16 +121,18 @@ public class PushupFragment extends Fragment implements SensorEventListener {
                     // TODO Mission failed.
                     if (BuildConfig.DEBUG) {
                         Log.d("Failed", "You failed, score is " + String.valueOf(count));
-                        /**
-                         * Save the result to database.
-                         */
-                        Date now = new Date();
-                        manager.saveCache(now, count);
-                        if (BuildConfig.DEBUG) {
-                            Log.d("DatabaseManager", String.valueOf(manager.getCount(now)));
-                        }
-                        count = 0;
                     }
+                    /**
+                     * Save the result to database.
+                     */
+                    manager.beginTransaction();
+                    Date now = new Date();
+                    manager.saveCache(now, count);
+                    if (BuildConfig.DEBUG) {
+                        Log.d("DatabaseManager", String.valueOf(manager.getCount(now)));
+                    }
+                    manager.endTransaction();
+                    count = 0;
                 }
             }
 

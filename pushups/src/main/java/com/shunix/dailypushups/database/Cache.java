@@ -6,10 +6,10 @@ import android.util.Log;
 import com.orm.androrm.Model;
 import com.orm.androrm.QuerySet;
 import com.orm.androrm.field.CharField;
-import com.orm.androrm.field.DateField;
 import com.orm.androrm.field.IntegerField;
 import com.shunix.dailypushups.BuildConfig;
 
+import java.text.DateFormat;
 import java.util.Date;
 
 /**
@@ -21,36 +21,27 @@ public class Cache extends Model {
     /**
      * used to save the current date.
      */
-    // FIXME Can't use DateField here, it will make the time a part of the field.
-    protected DateField dateField;
+    protected CharField date;
     /**
      * used to save the count of current day.
      */
     protected IntegerField pushupCount;
 
-    /**
-     * used as a key for index. Androrm only support string filter.
-     */
-    protected CharField dateString;
-
     public Cache() {
-        dateField = new DateField();
         pushupCount = new IntegerField();
-        dateString = new CharField();
-        dateString.set("");
+        date = new CharField();
     }
 
     public void setDate(Date date) {
-        dateField.set(date);
-        dateString.set(date.toString());
+        DateFormat format = DateFormat.getDateInstance();
+        this.date.set(format.format(date));
         if (BuildConfig.DEBUG) {
-            Log.d("DateField", dateField.getDateString());
-            Log.d("DateString", dateString.get());
+            Log.d("DateString", this.date.get());
         }
     }
 
-    public Date getDate() {
-        return dateField.get();
+    public String getDate() {
+        return date.get();
     }
 
     public void setCount(int count) {
