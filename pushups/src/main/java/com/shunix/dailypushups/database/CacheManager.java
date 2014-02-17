@@ -130,6 +130,7 @@ public class CacheManager {
 
     /**
      * used to get the count in last 3 days.
+     * you don't need to call beginTransaction() and endTransaction when calling this method.
      */
     public List<Integer> getThreeDaysCount(Date date) {
         List<Integer> list = new ArrayList<Integer>();
@@ -148,6 +149,7 @@ public class CacheManager {
 
     /**
      * used to get the count in last week.
+     * you don't need to call beginTransaction() and endTransaction when calling this method.
      */
     public List<Integer> getOneWeekCount(Date date) {
         List<Integer> list = new ArrayList<Integer>();
@@ -166,6 +168,7 @@ public class CacheManager {
 
     /**
      * used to get the count in last month, one month is regarded as 30 days here.
+     * you don't need to call beginTransaction() and endTransaction when calling this method.
      */
     public List<Integer> getOneMonthCount(Date date) {
         List<Integer> list = new ArrayList<Integer>();
