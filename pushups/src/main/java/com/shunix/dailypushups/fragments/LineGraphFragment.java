@@ -71,15 +71,33 @@ public class LineGraphFragment extends Fragment {
                 switch (i) {
                     case 0:
                         // 3 days.
+                        lineGraph.removeAllLines();
                         list = manager.getThreeDaysCount(new Date());
+                        drawGraph(list);
+                        lineGraph.invalidate();
+                        if (BuildConfig.DEBUG) {
+                            Log.d("Draw", "3 days");
+                        }
                         break;
                     case 1:
                         // a week.
+                        lineGraph.removeAllLines();
                         list = manager.getOneWeekCount(new Date());
+                        drawGraph(list);
+                        lineGraph.invalidate();
+                        if (BuildConfig.DEBUG) {
+                            Log.d("Draw", "A week");
+                        }
                         break;
                     case 2:
                         // a month.
+                        lineGraph.removeAllLines();
                         list = manager.getOneMonthCount(new Date());
+                        drawGraph(list);
+                        lineGraph.invalidate();
+                        if (BuildConfig.DEBUG) {
+                            Log.d("Draw", "A month");
+                        }
                         break;
                     default:
                         break;
@@ -88,6 +106,7 @@ public class LineGraphFragment extends Fragment {
 
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
+
             }
         });
 //        if (BuildConfig.DEBUG) {
@@ -125,8 +144,8 @@ public class LineGraphFragment extends Fragment {
     private void drawGraph(List<Integer> list) {
         int days = list.size();
         Line line = new Line();
-        LinePoint point = new LinePoint();
         for (int i = 0; i < days; ++i) {
+            LinePoint point = new LinePoint();
             point.setX((double) i);
             point.setY((double) list.get(i));
             line.addPoint(point);
@@ -134,7 +153,7 @@ public class LineGraphFragment extends Fragment {
         line.setColor(Color.CYAN);
         lineGraph.addLine(line);
         // In case there're some zero count in last few days. Set the min to -5 will make it look normal.
-        lineGraph.setRangeY(-5, getMax(list));
+        lineGraph.setRangeY(-5, getMax(list) + 5);
         lineGraph.setLineToFill(0);
     }
 
