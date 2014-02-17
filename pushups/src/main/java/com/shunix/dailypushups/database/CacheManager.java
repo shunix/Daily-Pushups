@@ -137,7 +137,7 @@ public class CacheManager {
         Date tempDate;
         Calendar calendar = Calendar.getInstance();
         this.beginTransaction();
-        for (int i = 2; i >= 0; ++i) {
+        for (int i = 2; i >= 0; --i) {
             calendar.setTime(date);
             calendar.add(Calendar.DATE, -i);
             tempDate = calendar.getTime();
@@ -156,7 +156,7 @@ public class CacheManager {
         Date tempDate;
         Calendar calendar = Calendar.getInstance();
         this.beginTransaction();
-        for (int i = 6; i >= 0; ++i) {
+        for (int i = 6; i >= 0; --i) {
             calendar.setTime(date);
             calendar.add(Calendar.DATE, -i);
             tempDate = calendar.getTime();
@@ -175,7 +175,7 @@ public class CacheManager {
         Date tempDate;
         Calendar calendar = Calendar.getInstance();
         this.beginTransaction();
-        for (int i = 30; i >= 0; ++i) {
+        for (int i = 30; i >= 0; --i) {
             calendar.setTime(date);
             calendar.add(Calendar.DATE, -i);
             tempDate = calendar.getTime();

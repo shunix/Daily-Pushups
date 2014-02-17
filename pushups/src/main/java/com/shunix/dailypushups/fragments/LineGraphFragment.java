@@ -3,6 +3,7 @@ package com.shunix.dailypushups.fragments;
 import android.app.Fragment;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
+import com.shunix.dailypushups.BuildConfig;
 import com.shunix.dailypushups.R;
 import com.shunix.dailypushups.database.CacheManager;
 import com.shunix.dailypushups.ui.Line;
@@ -59,6 +61,9 @@ public class LineGraphFragment extends Fragment {
         lineGraph = (LineGraph) view.findViewById(R.id.linegraph);
         // By default, show the count on three days.
         list = manager.getThreeDaysCount(new Date());
+        if (BuildConfig.DEBUG) {
+            Log.d("ListSize", String.valueOf(list.size()));
+        }
         // Set the data range by the spinner.
         dateSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -83,7 +88,6 @@ public class LineGraphFragment extends Fragment {
 
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
-
             }
         });
 //        if (BuildConfig.DEBUG) {
@@ -129,7 +133,8 @@ public class LineGraphFragment extends Fragment {
         }
         line.setColor(Color.CYAN);
         lineGraph.addLine(line);
-        lineGraph.setRangeY(0, getMax(list) + 5);
+        // In case there're some zero count in last few days. Set the min to -5 will make it look normal.
+        lineGraph.setRangeY(-5, getMax(list));
         lineGraph.setLineToFill(0);
     }
 
