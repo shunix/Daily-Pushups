@@ -11,6 +11,7 @@ import com.shunix.dailypushups.BuildConfig;
 
 import java.text.DateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -125,5 +126,59 @@ public class CacheManager {
             count = cache.getCount();
         }
         return count;
+    }
+
+    /**
+     * used to get the count in last 3 days.
+     */
+    public List<Integer> getThreeDaysCount(Date date) {
+        List<Integer> list = new ArrayList<Integer>();
+        Date tempDate;
+        Calendar calendar = Calendar.getInstance();
+        this.beginTransaction();
+        for (int i = 2; i >= 0; ++i) {
+            calendar.setTime(date);
+            calendar.add(Calendar.DATE, -i);
+            tempDate = calendar.getTime();
+            list.add(this.getCount(tempDate));
+        }
+        this.endTransaction();
+        return list;
+    }
+
+    /**
+     * used to get the count in last week.
+     */
+    public List<Integer> getOneWeekCount(Date date) {
+        List<Integer> list = new ArrayList<Integer>();
+        Date tempDate;
+        Calendar calendar = Calendar.getInstance();
+        this.beginTransaction();
+        for (int i = 6; i >= 0; ++i) {
+            calendar.setTime(date);
+            calendar.add(Calendar.DATE, -i);
+            tempDate = calendar.getTime();
+            list.add(this.getCount(tempDate));
+        }
+        this.endTransaction();
+        return list;
+    }
+
+    /**
+     * used to get the count in last month, one month is regarded as 30 days here.
+     */
+    public List<Integer> getOneMonthCount(Date date) {
+        List<Integer> list = new ArrayList<Integer>();
+        Date tempDate;
+        Calendar calendar = Calendar.getInstance();
+        this.beginTransaction();
+        for (int i = 30; i >= 0; ++i) {
+            calendar.setTime(date);
+            calendar.add(Calendar.DATE, -i);
+            tempDate = calendar.getTime();
+            list.add(this.getCount(tempDate));
+        }
+        this.endTransaction();
+        return list;
     }
 }
