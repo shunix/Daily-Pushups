@@ -67,6 +67,10 @@ public class PushupFragment extends Fragment implements SensorEventListener {
      * Helper to save the count.
      */
     private SharedPreferenceHelper sharedPreferenceHelper;
+    /**
+     * used to store the time for each loop.
+     */
+    private int seconds = 5;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -76,7 +80,8 @@ public class PushupFragment extends Fragment implements SensorEventListener {
         SharedPreferences preference = PreferenceManager.getDefaultSharedPreferences(getActivity());
         int color = preference.getInt(getString(R.string.color_key), Color.CYAN);
         progressBar.setProgressColor(color);
-        showCountDown(5);
+        seconds = preference.getInt(getString(R.string.time_bar_key), 50);
+        showCountDown(seconds / 10);
         return view;
     }
 
@@ -191,7 +196,7 @@ public class PushupFragment extends Fragment implements SensorEventListener {
                 progressBar.setNumber(count);
                 animator.cancel();
                 progressBar.setProgress(0f);
-                showCountDown(5);
+                showCountDown(seconds / 10);
                 if (BuildConfig.DEBUG) {
                     Log.d("Count", String.valueOf(count));
                 }
