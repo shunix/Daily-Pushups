@@ -1,5 +1,6 @@
 package com.shunix.dailypushups.fragments;
 
+import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
@@ -12,6 +13,7 @@ import android.widget.LinearLayout;
 import com.shunix.dailypushups.BuildConfig;
 import com.shunix.dailypushups.R;
 import com.shunix.dailypushups.ui.RadialMenuWidget;
+import com.shunix.dailypushups.utils.SharedPreferenceHelper;
 
 import java.util.List;
 
@@ -55,8 +57,8 @@ public class PanelFragment extends Fragment {
 
         // Set menu entries for the radial menu.
         radialMenu.setCenterCircle(new CenterPoint());
-        radialMenu.addMenuEntry(new CenterPoint());
-        radialMenu.addMenuEntry(new CenterPoint());
+        radialMenu.addMenuEntry(new PushupEntry(getActivity()));
+        radialMenu.addMenuEntry(new GraphEntry(getActivity()));
         radialMenu.setInnerRingColor(getResources().getColor(R.color.ivory), 100);
         radialMenu.setOuterRingColor(getResources().getColor(R.color.ivory), 100);
 
@@ -114,5 +116,110 @@ class CenterPoint implements RadialMenuWidget.RadialMenuEntry {
         if (BuildConfig.DEBUG) {
             Log.d("PanelFragment", "Center menu is clicker");
         }
+    }
+}
+
+/**
+ * Menu entry in the ring, start the pushup fragment.
+ *
+ * @author Ray WANG <admin@shunix.com>
+ * @version 1.0.0
+ * @since Feb 17th, 2014
+ */
+class PushupEntry implements RadialMenuWidget.RadialMenuEntry {
+
+    /**
+     * used to store the context, so that I can start fragment here.
+     */
+    private Context context;
+
+    public PushupEntry(Context context) {
+        this.context = context;
+    }
+
+    @Override
+    public String getName() {
+        return "Pushup";
+    }
+
+    @Override
+    public String getLabel() {
+        return "Pushup!";
+    }
+
+    @Override
+    public int getIcon() {
+        return R.drawable.ic_anchor;
+    }
+
+    @Override
+    public List<RadialMenuWidget.RadialMenuEntry> getChildren() {
+        return null;
+    }
+
+    @Override
+    public void menuActiviated() {
+        // Start fragment here.
+        ((Activity) context).runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                ((Activity) context).getFragmentManager().beginTransaction().replace(R.id.container, new PushupFragment()).addToBackStack(null).commit();
+            }
+        });
+    }
+}
+
+/**
+ * Menu entry in the ring, start the pushup fragment.
+ *
+ * @author Ray WANG <admin@shunix.com>
+ * @version 1.0.0
+ * @since Feb 17th, 2014
+ */
+class GraphEntry implements RadialMenuWidget.RadialMenuEntry {
+    /**
+     * used to store the context, so that I can start fragment here.
+     */
+    private Context context;
+    /**
+     * used to get the setting values.
+     */
+    private SharedPreferenceHelper sharedPreferenceHelper;
+
+    public GraphEntry(Context context) {
+        this.context = context;
+        sharedPreferenceHelper = SharedPreferenceHelper.getInstance(context);
+    }
+
+    @Override
+    public void menuActiviated() {
+        // Start fragment here.
+        String graphType = sharedPreferenceHelper.getValue(context.getString(R.string.chart_type_key));
+        if (graphType.equals("line")) {
+            ((Activity) context).getFragmentManager().beginTransaction().replace(R.id.container, new LineGraphFragment()).addToBackStack(null).commit();
+        } else {
+            ((Activity) context).getFragmentManager().beginTransaction().replace(R.id.container, new BarGraphFragment()).addToBackStack(null).commit();
+
+        }
+    }
+
+    @Override
+    public String getName() {
+        return "Graph";
+    }
+
+    @Override
+    public String getLabel() {
+        return "Graph";
+    }
+
+    @Override
+    public int getIcon() {
+        return R.drawable.ic_anchor;
+    }
+
+    @Override
+    public List<RadialMenuWidget.RadialMenuEntry> getChildren() {
+        return null;
     }
 }

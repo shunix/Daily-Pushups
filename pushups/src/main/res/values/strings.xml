@@ -20,4 +20,7 @@
     <string name="chart_type_key">chart_type_key</string>
     <string name="color_key">color_key</string>
     <string name="progress_bar_color">Progress Bar Color</string>
+    <string name="time_bar_key">time_bar_key</string>
+    <string name="time_bar_title">Choose time for each pushup</string>
+    <string name="time_title">Time for pushup</string>
 </resources>
