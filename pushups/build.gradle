@@ -19,7 +19,6 @@ android {
 }
 
 dependencies {
-    compile files('/home/shunix/Code/DailyPushups/libs/androrm.jar')
     compile files('/home/shunix/Code/Daily-Pushups/libs/androrm.jar')
     compile files('/home/shunix/Code/Daily-Pushups/libs/google-play-services.jar')
 }
