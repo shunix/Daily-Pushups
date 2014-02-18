@@ -14,11 +14,9 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 
-import com.shunix.dailypushups.BuildConfig;
 import com.shunix.dailypushups.R;
 import com.shunix.dailypushups.fragments.PanelFragment;
 
@@ -292,6 +290,24 @@ public class HoloCircularProgressBar extends View {
         canvas.translate(mTranslationOffsetX, mTranslationOffsetY);
 
         final float progressRotation = getCurrentRotation();
+        
+        /**
+         * Edited by Ray WANG <admin@shunix.com>
+         * Draw the number.
+         */
+        Paint textPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        textPaint.setColor(Color.WHITE);
+        final int TEXT_DIP = 100;
+        int pixel = PanelFragment.dpToPx(context, TEXT_DIP);
+        textPaint.setTextSize((float) pixel);
+        Paint.FontMetrics fontMetrics = textPaint.getFontMetrics();
+        float left = mCircleBounds.left;
+        float top = mCircleBounds.top;
+        double textHeight = Math.ceil(fontMetrics.descent - fontMetrics.ascent) + 2;
+        double textWidth = textPaint.measureText(String.valueOf(number));
+        double startX = left + mRadius - textWidth / 2;
+        double startY = top + mRadius - textHeight / 2;
+        canvas.drawText(String.valueOf(number), (float) startX, (float) startY, textPaint);
 
         // draw the background
         if (!mOverrdraw) {
@@ -325,41 +341,7 @@ public class HoloCircularProgressBar extends View {
             canvas.drawRect(mSquareRect, mThumbColorPaint);
             canvas.restore();
         }
-        /**
-         * Edited by Ray WANG <admin@shunix.com>
-         * Draw the number.
-         */
-        canvas.save();
-        Paint textPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        textPaint.setColor(Color.WHITE);
-        final int TEXT_DIP = 100;
-        int pixel = PanelFragment.dpToPx(context, TEXT_DIP);
-//        if(BuildConfig.DEBUG) {
-//            Log.d("TextSize", String.valueOf(pixel));
-//        }
-        textPaint.setTextSize((float) pixel);
-        Paint.FontMetrics fontMetrics = textPaint.getFontMetrics();
-//        float height = mCircleBounds.bottom - mCircleBounds.top;
-        float height = getHeight();
-        float width = mCircleBounds.right - mCircleBounds.left;
-        float left = mCircleBounds.left;
-        float top = mCircleBounds.left;
-        double textHeight = Math.ceil(fontMetrics.descent - fontMetrics.ascent) + 2;
-        double textWidth = textPaint.measureText(String.valueOf(number));
-        double startX = left + width / 2 - textWidth / 2;
-        double startY = top + height / 2 - textHeight / 2;
-//        if(BuildConfig.DEBUG) {
-//            Log.d("HoloCircularProgressBar", "Height: " + String.valueOf(height));
-//            Log.d("HoloCircularProgressBar", "Width: " + String.valueOf(width));
-//            Log.d("HoloCircularProgressBar", "Left: " + String.valueOf(left));
-//            Log.d("HoloCircularProgressBar", "Top: " + String.valueOf(top));
-//            Log.d("HoloCircularProgressBar", "TextHeight: " + String.valueOf(textHeight));
-//            Log.d("HoloCircularProgressBar", "TextWidth: " + String.valueOf(textWidth));
-//            Log.d("HoloCircularProgressBar", "StartX: " + String.valueOf(startX));
-//            Log.d("HoloCircularProgressBar", "StartY: " + String.valueOf(startY));
-//        }
-        canvas.drawText(String.valueOf(number), (float) startX, (float) startY, textPaint);
-        canvas.restore();
+
     }
 
     /*
