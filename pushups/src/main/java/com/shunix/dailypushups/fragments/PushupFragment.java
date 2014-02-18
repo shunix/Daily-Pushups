@@ -19,6 +19,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 import com.shunix.dailypushups.BuildConfig;
 import com.shunix.dailypushups.R;
 import com.shunix.dailypushups.database.CacheManager;
@@ -75,6 +77,12 @@ public class PushupFragment extends Fragment implements SensorEventListener {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.pushup_layout, container, false);
+        /**
+         * Show ads from admob.
+         */
+        AdView adView = (AdView) view.findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().addTestDevice("02D10F4BB9960878C9265F72D88BC40F").build();
+        adView.loadAd(adRequest);
         progressBar = (HoloCircularProgressBar) view.findViewById(R.id.holoCircularProgressBar);
         progressBar.setNumber(0);
         SharedPreferences preference = PreferenceManager.getDefaultSharedPreferences(getActivity());

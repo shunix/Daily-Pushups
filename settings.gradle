@@ -1,1 +1,1 @@
-include ':pushups'
+include ':pushups',':google-play-services_lib'

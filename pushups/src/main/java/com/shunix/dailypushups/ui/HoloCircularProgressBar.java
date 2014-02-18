@@ -334,9 +334,9 @@ public class HoloCircularProgressBar extends View {
         textPaint.setColor(Color.WHITE);
         final int TEXT_DIP = 100;
         int pixel = PanelFragment.dpToPx(context, TEXT_DIP);
-        if(BuildConfig.DEBUG) {
-            Log.d("TextSize", String.valueOf(pixel));
-        }
+//        if(BuildConfig.DEBUG) {
+//            Log.d("TextSize", String.valueOf(pixel));
+//        }
         textPaint.setTextSize((float) pixel);
         Paint.FontMetrics fontMetrics = textPaint.getFontMetrics();
 //        float height = mCircleBounds.bottom - mCircleBounds.top;
