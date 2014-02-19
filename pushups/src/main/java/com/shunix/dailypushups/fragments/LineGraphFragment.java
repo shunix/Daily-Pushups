@@ -11,6 +11,8 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 import com.shunix.dailypushups.BuildConfig;
 import com.shunix.dailypushups.R;
 import com.shunix.dailypushups.database.CacheManager;
@@ -54,6 +56,12 @@ public class LineGraphFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.linegraph_layout, container, false);
+        /**
+         * Show ads from admob.
+         */
+        AdView adView = (AdView) view.findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().addTestDevice("02D10F4BB9960878C9265F72D88BC40F").build();
+        adView.loadAd(adRequest);
         dateSpinner = (Spinner) view.findViewById(R.id.spinner);
         ArrayAdapter arrayAdapter = ArrayAdapter.createFromResource(getActivity(), R.array.spinner_array, android.R.layout.simple_spinner_item);
         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
