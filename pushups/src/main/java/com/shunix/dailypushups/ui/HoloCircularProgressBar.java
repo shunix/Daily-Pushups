@@ -18,7 +18,6 @@ import android.view.Gravity;
 import android.view.View;
 
 import com.shunix.dailypushups.R;
-import com.shunix.dailypushups.fragments.PanelFragment;
 
 /**
  * The Class HoloCircularProgressBar.
@@ -28,16 +27,6 @@ import com.shunix.dailypushups.fragments.PanelFragment;
  * @since 05.03.2013
  */
 public class HoloCircularProgressBar extends View {
-    /**
-     * Edited by Ray WANG <admin@shunix.com>
-     * used to save the number.
-     */
-    private int number = 0;
-    /**
-     * Edited by Ray WANG <admin@shunix.com>
-     * used to save the context.
-     */
-    private Context context;
     /**
      * The Constant TAG.
      */
@@ -262,18 +251,7 @@ public class HoloCircularProgressBar extends View {
 
         // the view has now all properties and can be drawn
         mIsInitializing = false;
-        this.context = context;
 
-    }
-
-    /**
-     * Edited by Ray WANG <admin@shunix.com>
-     * used to set the number.
-     *
-     * @param number
-     */
-    public void setNumber(int number) {
-        this.number = number;
     }
 
     /*
@@ -290,24 +268,6 @@ public class HoloCircularProgressBar extends View {
         canvas.translate(mTranslationOffsetX, mTranslationOffsetY);
 
         final float progressRotation = getCurrentRotation();
-        
-        /**
-         * Edited by Ray WANG <admin@shunix.com>
-         * Draw the number.
-         */
-        Paint textPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        textPaint.setColor(Color.WHITE);
-        final int TEXT_DIP = 100;
-        int pixel = PanelFragment.dpToPx(context, TEXT_DIP);
-        textPaint.setTextSize((float) pixel);
-        Paint.FontMetrics fontMetrics = textPaint.getFontMetrics();
-        float left = mCircleBounds.left;
-        float top = mCircleBounds.top;
-        double textHeight = Math.ceil(fontMetrics.descent - fontMetrics.ascent) + 2;
-        double textWidth = textPaint.measureText(String.valueOf(number));
-        double startX = left + mRadius - textWidth / 2;
-        double startY = top + mRadius - textHeight / 2;
-        canvas.drawText(String.valueOf(number), (float) startX, (float) startY, textPaint);
 
         // draw the background
         if (!mOverrdraw) {

@@ -18,6 +18,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
@@ -31,11 +32,15 @@ import java.util.Date;
 
 /**
  * @author Ray WANG <admin@shunix.com>
- * @version 1.1.0
+ * @version 1.2.0
  * @since Feb 9th, 2014
  */
 public class PushupFragment extends Fragment implements SensorEventListener {
 
+    /**
+     * used to show the count.
+     */
+    private TextView textView;
     /**
      * used to save the data to database
      */
@@ -84,11 +89,12 @@ public class PushupFragment extends Fragment implements SensorEventListener {
         AdRequest adRequest = new AdRequest.Builder().addTestDevice("02D10F4BB9960878C9265F72D88BC40F").build();
         adView.loadAd(adRequest);
         progressBar = (HoloCircularProgressBar) view.findViewById(R.id.holoCircularProgressBar);
-        progressBar.setNumber(0);
         SharedPreferences preference = PreferenceManager.getDefaultSharedPreferences(getActivity());
         int color = preference.getInt(getString(R.string.color_key), Color.CYAN);
         progressBar.setProgressColor(color);
         seconds = preference.getInt(getString(R.string.time_bar_key), 50);
+        textView = (TextView) view.findViewById(R.id.textView);
+        textView.setText(String.valueOf(count));
         showCountDown(seconds / 10);
         return view;
     }
@@ -201,7 +207,7 @@ public class PushupFragment extends Fragment implements SensorEventListener {
                 /**
                  * Restart the countdown.
                  */
-                progressBar.setNumber(count);
+                textView.setText(String.valueOf(count));
                 animator.cancel();
                 progressBar.setProgress(0f);
                 showCountDown(seconds / 10);

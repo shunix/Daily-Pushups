@@ -6,11 +6,27 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.shunix.dailypushups.ui.HoloCircularProgressBar
-        android:id="@+id/holoCircularProgressBar"
+
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_weight="4"
-        android:layout_height="0dp" />
+        android:layout_height="0dp"
+        android:layout_weight="4">
+
+        <com.shunix.dailypushups.ui.HoloCircularProgressBar
+            android:id="@+id/holoCircularProgressBar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Text"
+            android:id="@+id/textView"
+            android:textSize="100dp"
+            android:layout_gravity="center" />
+    </FrameLayout>
+
 
     <com.google.android.gms.ads.AdView
         android:id="@+id/adView"
@@ -19,5 +35,4 @@
         android:layout_height="0dp"
         ads:adUnitId="8b7585bc2c0b43c4"
         ads:adSize="BANNER" />
-
 </LinearLayout>
