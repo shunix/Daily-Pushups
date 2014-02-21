@@ -19,6 +19,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
@@ -86,7 +87,7 @@ public class PushupFragment extends Fragment implements SensorEventListener {
          * Show ads from admob.
          */
         AdView adView = (AdView) view.findViewById(R.id.adView);
-        AdRequest adRequest = new AdRequest.Builder().addTestDevice("02D10F4BB9960878C9265F72D88BC40F").build();
+        AdRequest adRequest = new AdRequest.Builder().build();
         adView.loadAd(adRequest);
         progressBar = (HoloCircularProgressBar) view.findViewById(R.id.holoCircularProgressBar);
         SharedPreferences preference = PreferenceManager.getDefaultSharedPreferences(getActivity());
@@ -143,10 +144,13 @@ public class PushupFragment extends Fragment implements SensorEventListener {
                 progressBar.setProgress(0f);
                 if (count == preCount) {
                     animator.cancel();
-                    // TODO Mission failed.
                     if (BuildConfig.DEBUG) {
                         Log.d("Failed", "You failed, score is " + String.valueOf(count));
                     }
+                    /**
+                     * Show the failed message.
+                     */
+                    Toast.makeText(getActivity(), "You have done " + count + " pushups.", Toast.LENGTH_SHORT).show();
                     /**
                      * Save the result to database.
                      */

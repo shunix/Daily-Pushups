@@ -10,10 +10,21 @@ android {
         versionCode 1
         versionName "1.0"
     }
+
+    signingConfigs {
+        signConfig {
+            storeFile file("/home/shunix/Documents/Archive/shunix.keystore")
+            storePassword "wr1995512"
+            keyAlias "shunix.keystore"
+            keyPassword "wr1995512"
+        }
+    }
     buildTypes {
         release {
-            runProguard false
+            debuggable false
+            runProguard true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+            signingConfig signingConfigs.signConfig
         }
     }
 }

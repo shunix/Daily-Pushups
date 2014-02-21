@@ -59,7 +59,7 @@ public class BarGraphFragment extends Fragment {
          * Show ads from admob.
          */
         AdView adView = (AdView) view.findViewById(R.id.adView);
-        AdRequest adRequest = new AdRequest.Builder().addTestDevice("02D10F4BB9960878C9265F72D88BC40F").build();
+        AdRequest adRequest = new AdRequest.Builder().build();
         adView.loadAd(adRequest);
         dateSpinner = (Spinner) view.findViewById(R.id.spinner);
         ArrayAdapter arrayAdapter = ArrayAdapter.createFromResource(getActivity(), R.array.spinner_array, android.R.layout.simple_spinner_item);
