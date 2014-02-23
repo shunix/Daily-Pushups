@@ -7,7 +7,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.shunix.dailypushups.R;
-import com.shunix.dailypushups.fragments.PanelFragment;
+import com.shunix.dailypushups.fragments.NumberBadgeFragment;
 
 /**
  * @author Ray WANG <admin@shunix.com>
@@ -19,7 +19,7 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_layout);
-        getFragmentManager().beginTransaction().replace(R.id.container, new PanelFragment()).commit();
+        getFragmentManager().beginTransaction().replace(R.id.container, new NumberBadgeFragment()).commit();
     }
 
     /**
